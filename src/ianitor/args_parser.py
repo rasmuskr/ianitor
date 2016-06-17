@@ -137,6 +137,12 @@ def get_parser():
     )
 
     parser.add_argument(
+        "--watched-tag-file",
+        dest="tag_file",
+        help="file with tags that is checked before registering. one tag per line",
+    )
+
+    parser.add_argument(
         "--id",
         help="set service id - must be node unique (defaults to service name)"
     )

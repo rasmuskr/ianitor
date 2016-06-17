@@ -74,6 +74,7 @@ def main():
         service_name=args.service_name,
         service_id=args.id,
         tags=args.tags,
+        tag_file=args.tag_file,
         port=args.port
     )
 
