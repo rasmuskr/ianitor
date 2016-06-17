@@ -74,8 +74,9 @@ def main():
         service_name=args.service_name,
         service_id=args.id,
         tags=args.tags,
+        port=args.port,
         tag_file=args.tag_file,
-        port=args.port
+        default_tags=args.default_tags
     )
 
     service.start()

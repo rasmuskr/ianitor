@@ -139,7 +139,14 @@ def get_parser():
     parser.add_argument(
         "--watched-tag-file",
         dest="tag_file",
+        metavar="tag-file",
         help="file with tags that is checked before registering. one tag per line",
+    )
+    parser.add_argument(
+        "--default-tags",
+        dest="default_tags",
+        action="append", metavar="tag",
+        help="dtags applied only when watched-tag-file cannot be read (can be used multiple times)",
     )
 
     parser.add_argument(

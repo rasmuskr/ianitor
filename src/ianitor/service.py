@@ -38,7 +38,8 @@ def ignore_connection_errors(action="unknown"):
 
 class Service(object):
     def __init__(self, command, session, ttl, service_name,
-                 service_id=None, tags=None, port=None, tag_file=None):
+                 service_id=None, tags=None, port=None,
+                 tag_file=None, default_tags=None):
         self.command = command
         self.session = session
         self.process = None
@@ -47,6 +48,7 @@ class Service(object):
         self.service_name = service_name
         self.tags = tags or []
         self.tag_file = tag_file
+        self.default_tags = default_tags or []
         self.port = port
         self.service_id = service_id or service_name
 
@@ -144,6 +146,6 @@ class Service(object):
                 with open(self.tag_file) as f:
                     tags.extend(f.readlines())
             except IOError:
-                logger.exception("failed to open tagfile '%s'", self.tag_file)
+                tags.extend(self.default_tags)
 
         return tags
