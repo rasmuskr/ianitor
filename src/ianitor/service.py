@@ -140,7 +140,7 @@ class Service(object):
 
     def _compute_tags(self):
 
-        tags = self.tags.copy()
+        tags = self.tags[:]
         if self.tag_file is not None:
             try:
                 with open(self.tag_file) as f:
