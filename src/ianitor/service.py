@@ -49,6 +49,7 @@ class Service(object):
         self.tags = tags or []
         self.tag_file = tag_file
         self.default_tags = default_tags or []
+        self._last_registered_tags = []
         self.port = port
         self.service_id = service_id or service_name
 
@@ -94,11 +95,12 @@ class Service(object):
         """
         logger.debug("registering service")
         with ignore_connection_errors():
+            self._last_registered_tags = self._compute_tags()
             self.session.agent.service.register(
                 name=self.service_name,
                 service_id=self.service_id,
                 port=self.port,
-                tags=self._compute_tags(),
+                tags=self._last_registered_tags,
                 # format the ttl into XXXs format
                 check=Check.ttl("%ss" % self.ttl)
             )
@@ -124,6 +126,10 @@ class Service(object):
 
         :return: None
         """
+
+        if self._last_registered_tags != self._compute_tags():
+            self.register()
+
         with ignore_connection_errors("ttl_pass"):
             if not self.session.agent.check.ttl_pass(self.check_id):
                 # register and ttl_pass again if it failed
