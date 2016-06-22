@@ -150,7 +150,8 @@ class Service(object):
         if self.tag_file is not None:
             try:
                 with open(self.tag_file) as f:
-                    tags.extend(f.readlines())
+                    for line in f.readlines():
+                        tags.append(line.strip())
             except IOError:
                 tags.extend(self.default_tags)
 
